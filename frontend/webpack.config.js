@@ -38,9 +38,17 @@ module.exports = {
     static: {
       directory: path.join(__dirname, 'dist'),
     },
+    host: '0.0.0.0',
     port: 3000,
-    open: true,
+    open: false,
     hot: true,
+    // Allow access via a forwarded port or the VM's IP (not just "localhost"),
+    // otherwise the hot-reload WebSocket is rejected and retries forever.
+    allowedHosts: 'all',
+    client: {
+      webSocketURL: 'auto://0.0.0.0:0/ws',
+      overlay: { errors: true, warnings: false },
+    },
   },
 
   plugins: [
