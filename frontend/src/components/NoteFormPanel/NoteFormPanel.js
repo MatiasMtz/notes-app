@@ -35,13 +35,35 @@ const NoteFormPanel = ({ note, onInputChange, handleSave, onClearForm }) => {
     onInputChange('categories', updatedCategories);
   };
 
+  const isValid = (title || '').trim() !== '' && (content || '').trim() !== '';
+
   const handleSaveNote = async () => {
-    const noteData = { title, content, categories };
-    if (note.id) {
-      await handleSave(noteData, note.id); 
-    } else {
-      await handleSave(noteData); 
+    if (!isValid) {
+      alert('Please add a title and some content before saving.');
+      return;
     }
+
+    // Include a category that was typed but not confirmed with Enter.
+    let finalCategories = categories;
+    const pending = newCategory.trim();
+    if (pending && !categories.some(category => category.name === pending)) {
+      finalCategories = [...categories, { name: pending, color: getRandomColor() }];
+    }
+
+    const noteData = {
+      title: title.trim(),
+      content: content.trim(),
+      categories: finalCategories,
+    };
+
+    if (note.id) {
+      await handleSave(noteData, note.id);
+    } else {
+      await handleSave(noteData);
+    }
+
+    setNewCategory('');
+    setShowCategory(false);
   };
 
   const handleClearForm = () => {
@@ -100,8 +122,12 @@ const NoteFormPanel = ({ note, onInputChange, handleSave, onClearForm }) => {
         <button className="add-btn" onClick={handleClearForm}>
           <LuEraser /> New Note
         </button>
-        <button className={`next-btn ${note.id ? 'edit-mode' : ''}`} onClick={handleSaveNote}>
-          {note.id ? 'Edit Note' : 'Save'} <IoIosSave />
+        <button
+          className={`next-btn ${note.id ? 'edit-mode' : ''}`}
+          onClick={handleSaveNote}
+          disabled={!isValid}
+        >
+          {note.id ? 'Save Changes' : 'Save'} <IoIosSave />
         </button>
       </div>
     </div>
