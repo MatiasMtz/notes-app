@@ -3,7 +3,11 @@ const noteService = require('../layer_services/noteService');
 const createNote = async (req, res) => {
   try {
     const { title, content, isArchived = false, categories } = req.body;
-    
+
+    if (!title || !title.trim() || !content || !content.trim()) {
+      return res.status(400).json({ message: 'Title and content are required.' });
+    }
+
     if (categories && Array.isArray(categories)) {
       for (const category of categories) {
         if (!category.name || !category.color) {
@@ -60,6 +64,13 @@ const updateNote = async (req, res) => {
   try {
     const { id } = req.params;
     const fieldsToUpdate = req.body;
+
+    if ('title' in fieldsToUpdate && (!fieldsToUpdate.title || !fieldsToUpdate.title.trim())) {
+      return res.status(400).json({ message: 'Title cannot be empty.' });
+    }
+    if ('content' in fieldsToUpdate && (!fieldsToUpdate.content || !fieldsToUpdate.content.trim())) {
+      return res.status(400).json({ message: 'Content cannot be empty.' });
+    }
 
     const updatedNote = await noteService.updateNote(id, fieldsToUpdate);
 
