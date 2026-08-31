@@ -1,141 +1,144 @@
 .NoteListPanel {
   display: flex;
   flex-direction: column;
-  height: 100%; 
+  gap: 20px;
 }
 
+/* Active / Archived segmented control */
 .ToggleButtonContainer {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  display: inline-flex;
+  align-self: flex-start;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
 .ToggleButton {
-  padding: 10px 20px;
-  font-size: 16px;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  color: #333;
+  padding: 7px 16px;
+  font-size: 0.85rem;
+  border: none;
+  background-color: var(--surface);
+  color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.ToggleButton.active {
-  background-color: #4caf50;
-  color: #fff;
-  border-color: #4caf50;
+.ToggleButton + .ToggleButton {
+  border-left: 1px solid var(--border-strong);
 }
 
 .ToggleButton:hover {
-  transform: scale(1.05);
+  color: var(--text);
 }
 
-.NoteList {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  max-height: 400px;
+.ToggleButton.active {
+  background-color: var(--accent);
+  color: var(--accent-contrast);
 }
 
-.NoteItem {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.NoNotesMessage {
-  text-align: center;
-  color: #888;
-  margin: 1rem 0;
-}
-
+/* Category filter */
 .FilterButtonContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
+  align-items: flex-start;
+  gap: 10px;
 }
 
 .FilterButton {
-  background-color: #007bff;
-  color: white;
+  padding: 6px 0;
+  background: none;
   border: none;
-  border-radius: 5px;
-  padding: 8px 15px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.FilterButton:hover {
+  color: var(--text);
 }
 
 .FilterMenu {
-  margin-top: 10px;
-  background: #333;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 10px;
-  width: 200px;
-  max-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  min-width: 200px;
+  max-height: 220px;
   overflow-y: auto;
 }
 
 .FilterOption {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  gap: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
 }
 
 .FilterOption input {
-  margin-right: 8px;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
+  accent-color: var(--accent);
   cursor: pointer;
-  border: 2px solid #ddd;
-  border-radius: 4px;
-  background-color: #fff;
-  transition: background-color 0.3s, border-color 0.3s;
-  appearance: none; 
 }
 
-.FilterOption input:checked {
-  background-color: #007bff;
-  border-color: #007bff;  
-}
-
-.FilterOption input:checked::before {
-  content: '✓'; 
-  color: white;
-  display: block;
-  font-size: 16px;
-  text-align: center;
-  line-height: 20px;
-}
-
-.FilterOption input:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.FilterEmpty {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
 }
 
 .SelectedCategories {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 10px;
+  gap: 6px;
 }
 
 .CategoryTag {
   display: inline-flex;
   align-items: center;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 0.9em;
+  gap: 4px;
+  padding: 3px 6px 3px 10px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.75rem;
 }
 
 .RemoveCategory {
-  background: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.25);
   border: none;
-  color: white;
-  margin-left: 5px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.8rem;
+  line-height: 1;
   cursor: pointer;
+}
+
+.RemoveCategory:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* Notes list */
+.NoteList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.NoNotesMessage {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 24px 0;
+  margin: 0;
 }
