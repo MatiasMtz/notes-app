@@ -30,17 +30,19 @@ const NoteItem = ({ note, onDelete, onArchiveToggle, onSelectNote }) => {
         </div>
       </div>
 
-      <div className="categories">
-        {(note.categories || []).map((category, index) => (
-          <span
-            key={index}
-            className="category"
-            style={{ backgroundColor: category.color }}
-          >
-            {category.name}
-          </span>
-        ))}
-      </div>
+      {(note.categories || []).length > 0 && (
+        <div className="categories">
+          {(note.categories || []).map((category) => (
+            <span
+              key={category.id ?? category.name}
+              className="category"
+              style={{ backgroundColor: category.color }}
+            >
+              {category.name}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
