@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import NoteFormPanel from './components/NoteFormPanel/NoteFormPanel.js';
 import NoteListPanel from './components/NoteListPanel/NoteListPanel.js';
@@ -6,61 +6,68 @@ import Header from './components/Header/Header.js';
 import Footer from './components/Footer/Footer.js';
 import './App.css';
 
+const API_URL = 'http://localhost:5000/api';
+
+const EMPTY_NOTE = { title: '', content: '', categories: [] };
+
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [isArchived, setIsArchived] = useState(false);
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [currentNote, setCurrentNote] = useState({
-    title: '',
-    content: '',
-    categories: [],
-  });
+  const [currentNote, setCurrentNote] = useState(EMPTY_NOTE);
 
-  const handleClearForm = () => {
-    setCurrentNote({
-      title: '',
-      content: '',
-      categories: [],
-    });
-  };
-
-  useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/notes');
-        setNotes(response.data);
-      } catch (error) {
-        console.error('Error fetching notes:', error);
-      }
-    };
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/categories');
-        setCategories(response.data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-    fetchNotes();
-    fetchCategories();
+  const handleClearForm = useCallback(() => {
+    setCurrentNote(EMPTY_NOTE);
   }, []);
 
+  const fetchNotes = useCallback(async () => {
+    try {
+      const response = await axios.get(`${API_URL}/notes`);
+      setNotes(response.data);
+    } catch (error) {
+      console.error('Error fetching notes:', error);
+    }
+  }, []);
+
+  const fetchCategories = useCallback(async () => {
+    try {
+      const response = await axios.get(`${API_URL}/categories`);
+      const fetched = response.data;
+      setCategories(fetched);
+      // Drop any selected filters whose category no longer exists
+      // (e.g. it was removed as an orphan when its last note was deleted).
+      setSelectedCategories((prev) =>
+        prev.filter((name) => fetched.some((cat) => cat.name === name))
+      );
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchNotes();
+    fetchCategories();
+  }, [fetchNotes, fetchCategories]);
+
   const filteredNotes = React.useMemo(() => {
-    return notes.filter(note => 
-      note.isArchived === isArchived && 
-      (selectedCategories.length === 0 || 
-        note.categories.some(category => selectedCategories.includes(category.name)))
-    );
+    return notes.filter((note) => {
+      const noteCategories = note.categories || [];
+      const matchesArchived = note.isArchived === isArchived;
+      const matchesCategory =
+        selectedCategories.length === 0 ||
+        noteCategories.some((category) => selectedCategories.includes(category.name));
+      return matchesArchived && matchesCategory;
+    });
   }, [notes, isArchived, selectedCategories]);
 
   const handleInputChange = (field, value) => {
-    setCurrentNote(prevNote => ({
+    setCurrentNote((prevNote) => ({
       ...prevNote,
       [field]: value,
     }));
   };
-  
+
   const handleToggleArchived = (archived) => {
     setIsArchived(archived);
   };
@@ -71,8 +78,11 @@ const App = () => {
 
   const handleDeleteNote = async (noteId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/notes/${noteId}`);
-      setNotes(prevNotes => prevNotes.filter(note => note.id !== noteId));
+      await axios.delete(`${API_URL}/notes/${noteId}`);
+      if (currentNote.id === noteId) {
+        handleClearForm();
+      }
+      await Promise.all([fetchNotes(), fetchCategories()]);
     } catch (error) {
       console.error('Error deleting note:', error);
     }
@@ -80,14 +90,14 @@ const App = () => {
 
   const handleArchiveToggle = async (noteId) => {
     try {
-      const noteToToggle = notes.find(note => note.id === noteId);
+      const noteToToggle = notes.find((note) => note.id === noteId);
       if (!noteToToggle) return;
-  
+
       const updatedIsArchived = !noteToToggle.isArchived;
-      await axios.put(`http://localhost:5000/api/notes/${noteId}`, { isArchived: updatedIsArchived });
-  
-      setNotes(prevNotes =>
-        prevNotes.map(note =>
+      await axios.put(`${API_URL}/notes/${noteId}`, { isArchived: updatedIsArchived });
+
+      setNotes((prevNotes) =>
+        prevNotes.map((note) =>
           note.id === noteId ? { ...note, isArchived: updatedIsArchived } : note
         )
       );
@@ -98,28 +108,15 @@ const App = () => {
 
   const handleSave = async (noteData, noteId = null) => {
     try {
-      let response;
       if (noteId) {
-        response = await axios.put(`http://localhost:5000/api/notes/${noteId}`, noteData);
-        setNotes((prevNotes) =>
-          prevNotes.map((note) =>
-            note.id === noteId ? { ...note, ...response.data } : note
-          )
-        );
+        await axios.put(`${API_URL}/notes/${noteId}`, noteData);
       } else {
-        response = await axios.post('http://localhost:5000/api/notes', noteData);
-  
-        const newNote = await axios.get(`http://localhost:5000/api/notes/${response.data.id}`);
-        setNotes((prevNotes) => [...prevNotes, newNote.data]);
+        await axios.post(`${API_URL}/notes`, noteData);
       }
-  
-      const allCategories = [...categories];
-      noteData.categories.forEach((newCat) => {
-        if (!allCategories.some((cat) => cat.name === newCat.name)) {
-          allCategories.push(newCat);
-        }
-      });
-      setCategories(allCategories); 
+      // Re-sync from the server so edited categories, new categories and
+      // orphan cleanup are always reflected in the list and the filters.
+      await Promise.all([fetchNotes(), fetchCategories()]);
+      handleClearForm();
     } catch (error) {
       console.error('Error saving note:', error);
       alert('There was an error saving your note. Please try again later.');
@@ -138,14 +135,12 @@ const App = () => {
     <div className="app">
       <Header />
       <div className="app-container">
-        <div className="panel note-form-panel">
-          <NoteFormPanel
-            note={currentNote}
-            onInputChange={handleInputChange}
-            handleSave={handleSave}
-            onClearForm={handleClearForm}
-          />
-        </div>
+        <NoteFormPanel
+          note={currentNote}
+          onInputChange={handleInputChange}
+          handleSave={handleSave}
+          onClearForm={handleClearForm}
+        />
         <div className="panel note-list-panel">
           <NoteListPanel
             notes={filteredNotes}
