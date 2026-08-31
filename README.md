@@ -14,11 +14,11 @@
 </p>
 
 ---
+
 ## Demo
 <p align="center">
-  <img src="https://github.com/MatiasMtz/notes-app/issues/1#issue-5303381169" width="80%" alt="Notes App demo">
+  <img src="https://private-user-images.githubusercontent.com/98335608/643731070-04672bf2-3970-4df5-93df-803373208db5.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODgyMDAyMzgsIm5iZiI6MTc4ODE5OTkzOCwicGF0aCI6Ii85ODMzNTYwOC82NDM3MzEwNzAtMDQ2NzJiZjItMzk3MC00ZGY1LTkzZGYtODAzMzczMjA4ZGI1LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA4MzElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwODMxVDE4MTIxOFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWM4MTNlOGE4YjQ3YWFhZTQ3NWQ2ZTZjNTExNzBhOTg0ZTg5NWE4MTgyODA1MjFjMzI4OGZkODk3ZmIzY2E3Y2EmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRnBuZyJ9.b4IwhJCcN1bBUrEQnIgG2h-hutsWNKyKV3Oo2LgE3B8" width="80%" alt="Notes App demo">
 </p>
-
 
 ---
 
