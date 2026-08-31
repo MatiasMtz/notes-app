@@ -1,65 +1,146 @@
-# Note-Taking Application
+[README_notes-app.md](https://github.com/user-attachments/files/31652884/README_notes-app.md)
+<h1 align="center">📝 Notes App</h1>
 
-This is a full-stack web application for creating, editing, deleting and filtering notes with tagging functionality.
+<p align="center">
+  A full-stack single page application to create, edit, archive and filter notes by category.
+</p>
 
-## Requirements
+<p align="center">
+  <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React">
+  <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB" alt="Express">
+  <img src="https://img.shields.io/badge/sequelize-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white" alt="Sequelize">
+  <img src="https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+</p>
 
-To run this application, ensure you have the following tools installed:
+---
 
-- **Node.js**: v20.17.0 or later
-- **npm**: v10.8.2 or later
-- **MySQL**: v8.0 or later
+## Features
 
-## Technologies Used
+- **Note management** — create, edit and delete notes.
+- **Archiving** — archive and unarchive notes, with separate views for active and archived ones.
+- **Categories** — tag notes with one or more colour-coded categories through a many-to-many relationship.
+- **Filtering** — narrow the list down to a single category.
+- **One-command setup** — a single script provisions the database, runs migrations and starts both apps.
 
-### Frontend
-- **React**: v19.0.0
-- **React DOM**: v19.0.0
-- **Other dependencies**: Refer to `frontend/package.json`.
+---
 
-### Backend
-- **Express**: v4.21.2
-- **mysql2**: 3.12.0
-- **Sequelize**: v6.37.5
-- **Sequelize CLI**: v6.6.1
-- **Other dependencies**: Refer to `backend/package.json`.
+## Architecture
 
-### Database
-- **MySQL**: v8.0 or later
+The backend follows a **layered architecture**, so each layer has one responsibility and can be tested or replaced on its own:
 
-## Setup Instructions
-1. Clone the repository:
-```bash
-git clone https://github.com/ensolvers-github-challenges/Martinez-3e5e7d.git
-cd <repository-folder>
+```
+Frontend  ->  Routes  ->  Controller  ->  Service  ->  Repository  ->  Database
 ```
 
-2. Run the setup script (Linux):
+- **Routes** map HTTP verbs and paths to controllers.
+- **Controllers** parse requests and shape responses. No business rules live here.
+- **Services** hold the business logic.
+- **Repositories** are the only layer that talks to the ORM, so persistence details never leak upwards.
+
+Frontend and backend are separate applications with their own `package.json`, communicating exclusively over a REST API.
+
+```
+notes-app/
+├── backend/
+│   ├── layer_controllers/    # Request handling
+│   ├── layer_services/       # Business logic
+│   ├── layer_repositories/   # Data access
+│   ├── models/               # Sequelize models and associations
+│   ├── migrations/           # Versioned schema changes
+│   ├── routes/               # API endpoint definitions
+│   └── app.js                # Express entry point
+├── frontend/
+│   └── src/components/       # React components
+└── start.sh                  # Setup and run script
+```
+
+---
+
+## API
+
+Base URL: `http://localhost:5000/api`
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/notes` | List all notes |
+| `GET` | `/notes/:id` | Get a single note |
+| `POST` | `/notes` | Create a note |
+| `PUT` | `/notes/:id` | Update a note |
+| `DELETE` | `/notes/:id` | Delete a note |
+| `GET` | `/categories` | List all categories |
+
+---
+
+## Data model
+
+| Entity | Fields |
+| :--- | :--- |
+| **Note** | `title`, `content`, `isArchived` |
+| **Category** | `name` (unique), `color` |
+
+Notes and categories are linked through a `NoteCategories` join table, so a note can carry several categories and a category can group several notes.
+
+---
+
+## Getting started
+
+### Requirements
+
+| Tool | Version |
+| :--- | :--- |
+| Node.js | 20.17.0 or later |
+| npm | 10.8.2 or later |
+| MySQL | 8.0 or later |
+
+### Installation
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/MatiasMtz/notes-app.git
+cd notes-app
+```
+
+**2. Run the setup script** (Linux / macOS)
+
 ```bash
 chmod +x start.sh
 ./start.sh
 ```
-This script will:
 
-- Install dependencies for both frontend and backend.
-- Set up the MySQL database and apply migrations.
-- Start the backend and frontend servers.
+The script installs dependencies for both apps, creates the database and its user, applies the migrations and starts the two servers.
 
-3. Access the application:
+**3. Open the app**
 
-- Frontend: Open http://localhost:3000 in your browser.
-- Backend: API available at http://localhost:5000.
+| Service | URL |
+| :--- | :--- |
+| Frontend | http://localhost:3000 |
+| API | http://localhost:5000/api |
 
-Default Configuration
+> **Note:** MySQL has to be running before you launch the script. If anything fails, the script logs the failing step.
 
-- Database: MySQL
-- Name: ensolvers_notes_app
-- User: ensolvers_user
-- Password: ensolvers_password
+### Default local configuration
 
-### Notes
+| Setting | Value |
+| :--- | :--- |
+| Database | `notes_app` |
+| User | `notes_user` |
+| Password | `notes_password` |
 
-Ensure MySQL is running before executing the script.
-If you encounter issues, refer to the logs generated by the script for troubleshooting.
+These are development-only values, created locally by the setup script.
 
+---
 
+## What I would improve next
+
+- Move the database credentials to environment variables with a versioned `.env.example`.
+- Add unit tests for the service layer and integration tests for the API.
+- Introduce authentication so notes belong to a user.
+- Paginate the note list, which currently loads every record at once.
+
+---
+
+## Author
+
+**Matías Martínez** — [GitHub](https://github.com/MatiasMtz) · [LinkedIn](https://www.linkedin.com/in/matiasmartinezhirsiger/)
