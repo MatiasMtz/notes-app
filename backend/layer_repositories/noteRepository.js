@@ -104,7 +104,9 @@ const updateNote = async (id, fieldsToUpdate) => {
         await updatedNote.addCategories(newCategories);
       }
 
-      return updatedNote;
+      // Return the note with its (possibly changed) categories included,
+      // so the API response stays consistent with GET /notes/:id.
+      return await getNoteById(id);
     }
 
     return null;
