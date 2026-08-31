@@ -40,27 +40,31 @@ const NoteListPanel = ({
           Filter by Category
         </button>
 
-        {isFilterMenuOpen && Array.isArray(categories) && categories.length > 0 && (
+        {isFilterMenuOpen && (
           <div className="FilterMenu">
-            {categories.map((category) => (
-              <label key={category.id} className="FilterOption">
-                <input
-                  type="checkbox"
-                  checked={Array.isArray(selectedCategories) && selectedCategories.includes(category.name)}
-                  onChange={() => onCategoryToggle(category.name)}
-                />
-                <span>{category.name}</span>
-              </label>
-            ))}
+            {Array.isArray(categories) && categories.length > 0 ? (
+              categories.map((category) => (
+                <label key={category.id ?? category.name} className="FilterOption">
+                  <input
+                    type="checkbox"
+                    checked={Array.isArray(selectedCategories) && selectedCategories.includes(category.name)}
+                    onChange={() => onCategoryToggle(category.name)}
+                  />
+                  <span>{category.name}</span>
+                </label>
+              ))
+            ) : (
+              <p className="FilterEmpty">No categories yet</p>
+            )}
           </div>
         )}
-        
+
         <div className="SelectedCategories">
-          {Array.isArray(selectedCategories) && selectedCategories.length > 0 && selectedCategories.map((category, index) => {
+          {Array.isArray(selectedCategories) && selectedCategories.length > 0 && selectedCategories.map((category) => {
             const categoryObj = categories.find((cat) => cat.name === category);
             return (
               <span
-                key={index}
+                key={category}
                 className="CategoryTag"
                 style={{ backgroundColor: categoryObj?.color }}
               >
