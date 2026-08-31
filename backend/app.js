@@ -18,6 +18,11 @@ app.use(cors({
 // Middleware for parsing JSON request bodies
 app.use(express.json());
 
+// Simple root response so hitting the server directly isn't a bare "Cannot GET /"
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'Notes API. Endpoints are served under /api' });
+});
+
 // Register note routes under the '/api' path
 app.use('/api', noteRoutes);
 
