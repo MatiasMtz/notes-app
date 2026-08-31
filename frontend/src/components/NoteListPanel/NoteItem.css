@@ -1,0 +1,56 @@
+.note-item {
+  border-left: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.note-item h4 {
+  margin: 0;
+  font-size: 16px;
+  flex: 1;
+}
+
+.note-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.note-actions button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.note-actions button:hover {
+  opacity: 0.8;
+}
+
+.categories {
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.category {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 3px 8px;
+  margin-right: 5px;
+  margin-top: 5px;
+  color: white;
+}
+
+.archived {
+  color: #888;
+  border-left: 1px solid #DAC124;  
+}

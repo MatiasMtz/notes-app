@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# Environment files
+.env
+.env.*.local
+
+# IDE
+.vscode/
+
+frontend/dist/
+package-lock.json

@@ -1,0 +1,77 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+.app-container {
+  display: flex;
+}
+
+header {
+  background-color: #444;
+  padding: 10px 20px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header img {
+  height: 40px;
+}
+
+.header {
+  flex: 0 0 auto;
+}
+
+.panel {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.NoteFormPanel,
+.NoteListPanel {
+  flex: 1;
+  overflow: auto; 
+}
+
+.note-form-panel {
+  background-color: #2c2c2c;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.note-list-panel {
+  background-color: #1e1e1e;
+  color: white;
+  padding: 20px;
+}
+
+footer {
+  background-color: #444;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+}
+
+.footer {
+  flex: 0 0 auto;
+  text-align: center;
+  background-color: #222;
+  color: white;
+  padding: 10px 0;
+}

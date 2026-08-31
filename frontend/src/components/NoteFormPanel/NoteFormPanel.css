@@ -1,0 +1,182 @@
+.note-form-panel {
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+  gap: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.title-row .title-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.title-row input {
+  flex: 1;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.category-toggle {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.category-toggle:hover {
+  background-color: #e0e0e0;
+}
+
+.category-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.category-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 5px;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.remove-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  font-size: 1.2em; 
+  cursor: pointer;
+}
+
+.category-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border-style: none;
+  cursor: pointer;
+  margin: 5px 5px 0 0;
+  font-size: 0.75em;
+  color: #fafafa;
+}
+
+.remove-category {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1em;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.remove-category:hover {
+  color: #ccc;
+}
+
+.content-row {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-row textarea {
+  flex: 1;
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+  box-sizing: border-box;
+  background-image: linear-gradient(to bottom, #ccc 0.5px, transparent 0.5px);
+  background-size: 100% 25px;
+}
+
+.note-form-panel {
+  padding-bottom: 20px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between; 
+  margin-top: 5px;
+}
+
+.add-btn,
+.next-btn {
+  padding: 10px 20px;
+  font-size: 0.8em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.add-btn {
+  background-color: green;
+  color: white;
+}
+
+.add-btn:hover {
+  background-color: rgb(64, 199, 64);
+}
+
+.next-btn {
+  background-color: green;
+  color: white;
+}
+
+.next-btn:hover {
+  background-color: #006600;
+}
+
+.add-btn svg {
+  margin-right: 10px;
+}
+
+.next-btn svg {
+  margin-left: 10px;
+}
+
+.next-btn.edit-mode {
+  background-color: #DAC124;
+  color: black;
+}
+
+.next-btn.edit-mode:hover {
+  background-color: #EED326; 
+}
+
+.next-btn.edit-mode svg {
+  fill: black;
+}

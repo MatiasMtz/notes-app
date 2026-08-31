@@ -1,0 +1,141 @@
+.NoteListPanel {
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+}
+
+.ToggleButtonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.ToggleButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ToggleButton.active {
+  background-color: #4caf50;
+  color: #fff;
+  border-color: #4caf50;
+}
+
+.ToggleButton:hover {
+  transform: scale(1.05);
+}
+
+.NoteList {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.NoteItem {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.NoNotesMessage {
+  text-align: center;
+  color: #888;
+  margin: 1rem 0;
+}
+
+.FilterButtonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.FilterButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+.FilterMenu {
+  margin-top: 10px;
+  background: #333;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  width: 200px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.FilterOption {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.FilterOption input {
+  margin-right: 8px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: background-color 0.3s, border-color 0.3s;
+  appearance: none; 
+}
+
+.FilterOption input:checked {
+  background-color: #007bff;
+  border-color: #007bff;  
+}
+
+.FilterOption input:checked::before {
+  content: '✓'; 
+  color: white;
+  display: block;
+  font-size: 16px;
+  text-align: center;
+  line-height: 20px;
+}
+
+.FilterOption input:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.SelectedCategories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.CategoryTag {
+  display: inline-flex;
+  align-items: center;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9em;
+}
+
+.RemoveCategory {
+  background: none;
+  border: none;
+  color: white;
+  margin-left: 5px;
+  cursor: pointer;
+}
