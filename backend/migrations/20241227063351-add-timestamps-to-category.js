@@ -14,7 +14,7 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     await queryInterface.removeColumn('Categories', 'createdAt');
     await queryInterface.removeColumn('Categories', 'updatedAt');
   }

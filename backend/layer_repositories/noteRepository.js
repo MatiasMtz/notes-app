@@ -51,6 +51,7 @@ const getNoteById = async (id) => {
     });
     return note;
   } catch (error) {
+    console.error('Error fetching note:', error);
     throw new Error('Error fetching note');
   }
 };
@@ -157,6 +158,7 @@ const deleteNote = async (id) => {
 
     return null;
   } catch (error) {
+    console.error('Error deleting note:', error);
     throw new Error('Error deleting note');
   }
 };
