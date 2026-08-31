@@ -14,6 +14,13 @@
 </p>
 
 ---
+## Demo
+<p align="center">
+  <img src="https://github.com/MatiasMtz/notes-app/issues/1#issue-5303381169" width="80%" alt="Notes App demo">
+</p>
+
+
+---
 
 ## Features
 
